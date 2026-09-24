@@ -1,0 +1,6 @@
+{
+  "name": "SD Negeri Medowo 1 & PRESENSEA",
+  "description": "Website Resmi SD Negeri Medowo 1 dan Ekosistem Digital Kelas PRESENSEA di Lereng Gunung Anjasmoro, Kediri.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

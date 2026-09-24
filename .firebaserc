@@ -1,5 +1,14 @@
 {
   "projects": {
-    "default": "medowosatu"
+    "default": "medowosatu-cabd8"
+  },
+  "targets": {
+    "medowosatu-cabd8": {
+      "hosting": {
+        "medowosatu": [
+          "medowosatu"
+        ]
+      }
+    }
   }
 }

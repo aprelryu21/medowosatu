@@ -24,10 +24,11 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Deploy to Firebase Hosting
+      - name: Deploy to Firebase Hosting (medowosatu)
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEDOWOSATU || secrets.FIREBASE_SERVICE_ACCOUNT_MEDOWOSATU_CABD8 }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEDOWOSATU_CABD8 || secrets.FIREBASE_SERVICE_ACCOUNT_MEDOWOSATU }}'
           channelId: live
-          projectId: medowosatu
+          projectId: medowosatu-cabd8
+          target: medowosatu

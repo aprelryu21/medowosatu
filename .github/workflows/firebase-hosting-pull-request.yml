@@ -26,5 +26,6 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEDOWOSATU || secrets.FIREBASE_SERVICE_ACCOUNT_MEDOWOSATU_CABD8 }}'
-          projectId: medowosatu
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEDOWOSATU_CABD8 || secrets.FIREBASE_SERVICE_ACCOUNT_MEDOWOSATU }}'
+          projectId: medowosatu-cabd8
+          target: medowosatu

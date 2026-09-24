@@ -154,11 +154,11 @@ export const FloatingNavbar: React.FC<FloatingNavbarProps> = ({ onNavigate }) =>
                   SDN Medowo 1
                 </span>
                 <span
-                  className={`text-slate-500 dark:text-slate-400 tracking-wider font-medium uppercase leading-none hidden sm:inline transition-all ${
-                    isScrolled ? 'text-[9.5px] mt-0.5' : 'text-[10.5px] mt-0.5'
+                  className={`text-blue-600 dark:text-blue-400 font-medium tracking-wide leading-none transition-all ${
+                    isScrolled ? 'text-[9px] sm:text-[9.5px] mt-0.5' : 'text-[9.5px] sm:text-[10.5px] mt-0.5'
                   }`}
                 >
-                  Lereng Anjasmoro · Kediri
+                  Support by Presensea
                 </span>
               </div>
             </a>
@@ -267,6 +267,16 @@ export const FloatingNavbar: React.FC<FloatingNavbarProps> = ({ onNavigate }) =>
                           <button
                             onClick={() => {
                               setIsUserMenuOpen(false);
+                              navigate('/admin');
+                            }}
+                            className="w-full px-2.5 py-2 rounded-xl text-left text-blue-600 dark:text-blue-400 font-semibold hover:bg-blue-50 dark:hover:bg-blue-950/50 flex items-center gap-2 transition-colors cursor-pointer"
+                          >
+                            <ShieldCheck className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                            <span>Buka Panel Admin</span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              setIsUserMenuOpen(false);
                               const el = document.getElementById('presensea');
                               if (el) el.scrollIntoView({ behavior: 'smooth' });
                             }}
@@ -365,10 +375,20 @@ export const FloatingNavbar: React.FC<FloatingNavbarProps> = ({ onNavigate }) =>
                         <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate">
                           {displayUsername}
                         </span>
-                        <span className="text-[10px] text-blue-600 dark:text-blue-400 font-medium">
-                          Pendidik
+                        <span className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold">
+                          Administrator
                         </span>
                       </div>
+                      <button
+                        onClick={() => {
+                          setIsMobileMenuOpen(false);
+                          navigate('/admin');
+                        }}
+                        className="w-full py-2.5 rounded-xl text-xs font-semibold bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300 hover:bg-blue-100 flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                      >
+                        <ShieldCheck className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                        <span>Buka Panel Admin</span>
+                      </button>
                       <button
                         onClick={() => {
                           setIsMobileMenuOpen(false);

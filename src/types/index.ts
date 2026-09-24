@@ -3,6 +3,7 @@ export type UserRole = 'admin' | 'kepala_sekolah' | 'guru_kelas' | 'guru_mapel' 
 export interface AuthUser {
   id: string;
   email: string;
+  username?: string;
   name: string;
   role: UserRole;
   nip?: string;

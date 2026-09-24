@@ -8,6 +8,7 @@ interface RouterContextType {
   isNewsDetail: boolean;
   isMediaList: boolean;
   isMediaDetail: boolean;
+  isAdmin: boolean;
   newsSlugOrId: string | null;
   mediaSlugOrId: string | null;
 }
@@ -67,6 +68,7 @@ export const RouterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   const isHome = normalized === '/' || normalized === '';
   const isNewsList = normalized === '/berita';
   const isMediaList = normalized === '/media' || normalized === '/inovasi-media';
+  const isAdmin = normalized === '/admin' || normalized.startsWith('/admin/');
 
   // Check /berita/:id or /berita/:slug
   let isNewsDetail = false;
@@ -102,6 +104,7 @@ export const RouterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         isNewsDetail,
         isMediaList,
         isMediaDetail,
+        isAdmin,
         newsSlugOrId,
         mediaSlugOrId
       }}

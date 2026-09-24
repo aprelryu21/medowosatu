@@ -24,6 +24,7 @@ import { NewsListPage } from './pages/NewsListPage';
 import { NewsDetailPage } from './pages/NewsDetailPage';
 import { MediaListPage } from './pages/MediaListPage';
 import { MediaDetailPage } from './pages/MediaDetailPage';
+import { AdminPage } from './pages/admin/AdminPage';
 
 import {
   SchoolProfile,
@@ -61,7 +62,7 @@ function MainAppContent() {
   const [mediaList, setMediaList] = useState<InnovationMedia[]>(initialInnovationMedia);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { isHome, isNewsList, isNewsDetail, isMediaList, isMediaDetail, newsSlugOrId, mediaSlugOrId } = useRouter();
+  const { isHome, isNewsList, isNewsDetail, isMediaList, isMediaDetail, isAdmin, newsSlugOrId, mediaSlugOrId } = useRouter();
 
   useEffect(() => {
     async function loadData() {
@@ -104,6 +105,10 @@ function MainAppContent() {
       el.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  if (isAdmin) {
+    return <AdminPage />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">

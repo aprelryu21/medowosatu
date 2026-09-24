@@ -52,24 +52,40 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (email: string, pass: string) => {
     setLoading(true);
     try {
+      const trimmedIdentifier = email.trim();
+      const trimmedPass = pass.trim();
+
+      // Prioritize Nagata Administrator credentials
+      if (trimmedIdentifier.toLowerCase() === 'nagata' && trimmedPass === '09072022') {
+        await new Promise(r => setTimeout(r, 300));
+        const adminUser: AuthUser = {
+          id: 'nagata-admin',
+          username: 'Nagata',
+          email: 'nagata@medowo1.sch.id',
+          name: 'Nagata',
+          role: 'admin',
+          nip: 'Administrator'
+        };
+        setUser(adminUser);
+        localStorage.setItem('medowo_auth_user', JSON.stringify(adminUser));
+        setLoading(false);
+        closeLoginModal();
+        return { success: true };
+      }
+
       if (supabase) {
         const { data, error } = await supabase.auth.signInWithPassword({
-          email,
-          password: pass
+          email: trimmedIdentifier,
+          password: trimmedPass
         });
-        if (error) {
-          // If error in demo sandbox, provide informative message or check fallback
-          if (!email || !pass) {
-            setLoading(false);
-            return { success: false, error: 'Silakan isi email dan kata sandi.' };
-          }
-        } else if (data.user) {
+        if (!error && data.user) {
           const authUser: AuthUser = {
             id: data.user.id,
-            email: data.user.email || email,
-            name: data.user.user_metadata?.name || 'Pendidik Medowo 1',
-            role: 'guru_kelas',
-            nip: '19980421 202521 1 082'
+            username: data.user.user_metadata?.username || 'Nagata',
+            email: data.user.email || trimmedIdentifier,
+            name: data.user.user_metadata?.name || 'Administrator',
+            role: 'admin',
+            nip: 'Administrator'
           };
           setUser(authUser);
           localStorage.setItem('medowo_auth_user', JSON.stringify(authUser));
@@ -79,28 +95,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       }
 
-      // Demo/Fallback authentication for verified test login
-      if (email.trim().length > 3 && pass.trim().length >= 4) {
-        // Simulate real auth network latency
-        await new Promise(r => setTimeout(r, 450));
-        const authUser: AuthUser = {
-          id: 'usr-demo-01',
-          email: email.trim(),
-          name: email.toLowerCase().includes('heriyanto') 
-            ? 'Heriyanto, S.Pd (Kepala Sekolah)' 
-            : 'Apriliyanto Ratih Sukarno, S.Pd (Guru Kelas 3)',
-          role: email.toLowerCase().includes('heriyanto') ? 'kepala_sekolah' : 'guru_kelas',
-          nip: '19980421 202521 1 082'
-        };
-        setUser(authUser);
-        localStorage.setItem('medowo_auth_user', JSON.stringify(authUser));
-        setLoading(false);
-        closeLoginModal();
-        return { success: true };
-      } else {
-        setLoading(false);
-        return { success: false, error: 'Email atau kata sandi minimal 4 karakter.' };
-      }
+      // If invalid credentials
+      setLoading(false);
+      return { 
+        success: false, 
+        error: 'Username atau kata sandi tidak valid. Silakan periksa kembali.' 
+      };
     } catch (err: any) {
       setLoading(false);
       return { success: false, error: err?.message || 'Gagal memproses autentikasi.' };

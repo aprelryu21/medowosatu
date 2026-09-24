@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useRouter } from '../../context/RouterContext';
 import { SchoolEmblem } from '../common/SchoolEmblem';
 import { 
   X, 
   Lock, 
   Mail, 
+  User,
   Eye, 
   EyeOff, 
   ShieldCheck, 
@@ -20,6 +22,7 @@ import { motion, AnimatePresence } from 'motion/react';
 
 export const LoginModal: React.FC = () => {
   const { isLoginModalOpen, closeLoginModal, login, loading } = useAuth();
+  const { navigate } = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -34,6 +37,8 @@ export const LoginModal: React.FC = () => {
     if (isLoginModalOpen) {
       setErrorMessage(null);
       setShowForgotModal(false);
+      setEmail('');
+      setPassword('');
       setTimeout(() => {
         emailInputRef.current?.focus();
       }, 100);
@@ -61,16 +66,9 @@ export const LoginModal: React.FC = () => {
     const result = await login(email, password);
     if (!result.success && result.error) {
       setErrorMessage(result.error);
-    }
-  };
-
-  const handleFillDemo = (type: 'guru' | 'kepala') => {
-    if (type === 'guru') {
-      setEmail('apriliyanto@medowo1.sch.id');
-      setPassword('presensea2026');
-    } else {
-      setEmail('heriyanto@medowo1.sch.id');
-      setPassword('kepsek2026');
+    } else if (result.success) {
+      closeLoginModal();
+      navigate('/admin');
     }
   };
 
@@ -138,20 +136,21 @@ export const LoginModal: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                  Email atau Akun Guru
+                  Nama Pengguna
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                    <Mail className="w-4 h-4" />
+                    <User className="w-4 h-4" />
                   </div>
                   <input
                     ref={emailInputRef}
-                    type="email"
+                    type="text"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="nama@medowo1.sch.id"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 text-slate-900 dark:text-white text-xs placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition-all"
+                    placeholder="isikan dengan username"
+                    autoComplete="username"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 text-slate-900 dark:text-white text-xs placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition-all font-medium"
                   />
                 </div>
               </div>
@@ -217,37 +216,12 @@ export const LoginModal: React.FC = () => {
                   </>
                 ) : (
                   <>
-                    <span>Masuk ke PRESENSEA</span>
+                    <span>Masuk</span>
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
               </button>
             </form>
-
-            {/* Quick Demo Access Bar */}
-            <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
-              <p className="text-[11px] text-slate-400 dark:text-slate-500 text-center mb-2.5">
-                Akses Cepat Pengujian:
-              </p>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => handleFillDemo('guru')}
-                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 text-[11px] text-slate-600 dark:text-slate-300 hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left truncate cursor-pointer"
-                >
-                  <span className="font-semibold block">Guru Kelas 3</span>
-                  <span className="text-[10px] text-slate-400">Apriliyanto R., S.Pd</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleFillDemo('kepala')}
-                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 text-[11px] text-slate-600 dark:text-slate-300 hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left truncate cursor-pointer"
-                >
-                  <span className="font-semibold block">Kepala Sekolah</span>
-                  <span className="text-[10px] text-slate-400">Heriyanto, S.Pd</span>
-                </button>
-              </div>
-            </div>
 
             {/* Nested Animated Pop-up: Tanyakan Admin Sekolah Jika Lupa Akses Masuk */}
             <AnimatePresence>

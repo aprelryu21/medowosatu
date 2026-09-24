@@ -1,0 +1,76 @@
+{
+  "entities": {
+    "SchoolProfile": {
+      "title": "SchoolProfile",
+      "description": "Profil identitas dan informasi pokok SD Negeri Medowo 1",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "npsn": { "type": "string" },
+        "address": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "accreditation": { "type": "string" },
+        "vision": { "type": "string" },
+        "mission": { "type": "array", "items": { "type": "string" } },
+        "student_count": { "type": "number" },
+        "teacher_count": { "type": "number" },
+        "principal_name": { "type": "string" },
+        "principal_nip": { "type": "string" },
+        "principal_welcome": { "type": "string" }
+      },
+      "required": ["name", "npsn", "email"]
+    },
+    "NewsArticle": {
+      "title": "NewsArticle",
+      "description": "Warta dan publikasi berita sekolah",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "content": { "type": "string" },
+        "cover_image": { "type": "string" },
+        "category": { "type": "string" },
+        "author": { "type": "string" },
+        "published_at": { "type": "string" },
+        "featured": { "type": "boolean" },
+        "status": { "type": "string" }
+      },
+      "required": ["title", "slug", "content", "category", "author"]
+    },
+    "InnovationMedia": {
+      "title": "InnovationMedia",
+      "description": "Media pembelajaran dan inovasi digital karya pendidik",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "creator": { "type": "string" },
+        "year": { "type": "number" },
+        "preview_image": { "type": "string" },
+        "demo_url": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["title", "description", "category", "creator"]
+    }
+  },
+  "firestore": {
+    "/profiles/{profileId}": {
+      "schema": "SchoolProfile",
+      "description": "Profil sekolah publik"
+    },
+    "/news/{newsId}": {
+      "schema": "NewsArticle",
+      "description": "Artikel publikasi dan berita sekolah"
+    },
+    "/media/{mediaId}": {
+      "schema": "InnovationMedia",
+      "description": "Portofolio media inovasi sekolah"
+    }
+  }
+}
